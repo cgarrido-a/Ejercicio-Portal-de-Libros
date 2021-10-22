@@ -1,0 +1,27 @@
+<div class="book_card border m-1 p-3">
+    
+    <% if book.state == 0 %>
+        <span class="badge badge-primary">Disponible</span>
+    <% elsif book.state == 1 %>
+        <span class="badge badge-warning">Reservado</span>
+    <% else %>
+        <span class="badge badge-success">Pagado</span>
+    <% end%>
+
+    <h3>
+        <%= book.title %>
+    </h3>
+
+    <p><%= book.description %></p>
+    <%= link_to "VER MAS", get_book_path(book), remote: true, class: 'btn btn-info'%>
+
+    <% if book.state == 0 %>
+        <%= link_to "Reservar", change_state_book_path(book.id, 1),remote: true,data: {disable_with: "Procesando reserva..."}, class: 'btn btn-secondary'%>
+    <% elsif book.state == 1 %>
+        <%= link_to "Pagar", change_state_book_path( book.id, 2), remote: true, class: 'btn btn-warning'%>
+        <%= link_to "Eliminar Reserva", change_state_book_path( book.id, 0), remote: true, class: 'btn btn-danger'%>
+    <% else %>
+        <%= link_to "Eliminar", destroy_book_path(book), method: :delete, data: {confirm: "Esta seguro de eliminar el registro?", disable_with: "Eliminando registro de compra..."}, remote: true, class: 'btn btn-danger'%>
+    <% end%>
+
+</div>
